@@ -110,9 +110,9 @@ subroutine get_c_commandline_arguments(argc,argv)
   use, intrinsic :: iso_c_binding
   integer(c_int), intent(out) :: argc
   type(c_ptr), intent(inout) :: argv(:)
-  character(kind=c_char,len=1), save, target :: args(512)
-  character(kind=c_char,len=512), save, target :: cmd
-  character(kind=c_char,len=512) :: arg
+  character(kind=c_char,len=1), save, target :: args(1024)
+  character(kind=c_char,len=1024), save, target :: cmd
+  character(kind=c_char,len=1024) :: arg
   integer(c_int) :: iarg, arglen, pos, ich, argpos
   call get_command(cmd)
   do ich=1,len(cmd)
@@ -183,7 +183,7 @@ subroutine copy_c_ptr_to_string(cptr,string)
   type(c_ptr), intent(in) :: cptr
   character(kind=c_char,len=:), allocatable :: string
   character(kind=c_char), dimension(:), pointer  :: s
-  integer(c_int), parameter :: MAX_STR_LEN = 512
+  integer(c_int), parameter :: MAX_STR_LEN = 1024
   call c_f_pointer ( cptr , s, (/MAX_STR_LEN/) )
   call copy_c_str_to_string( s, string )
 end subroutine
@@ -195,7 +195,7 @@ function c_ptr_to_string(cptr) result(string)
   type(c_ptr), intent(in) :: cptr
   character(kind=c_char,len=:), allocatable :: string
   character(kind=c_char), dimension(:), pointer  :: s
-  integer(c_int), parameter :: MAX_STR_LEN = 512
+  integer(c_int), parameter :: MAX_STR_LEN = 1024
   call c_f_pointer ( cptr , s, (/MAX_STR_LEN/) )
   call copy_c_str_to_string( s, string )
 end function
